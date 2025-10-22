@@ -44,7 +44,54 @@
     .muted{color:var(--muted)}
     .small{font-size:.95rem}
 
-    /* NAV */
+    /* ===================== PRELOADER ===================== */
+    .preloader{
+      position:fixed; inset:0; z-index:9999; display:grid; place-items:center;
+      background:linear-gradient(180deg, var(--bg), color-mix(in oklab, var(--bg) 70%, #0000));
+      transition:opacity .6s ease, visibility .6s ease, transform .6s ease;
+    }
+    .preloader.hide{opacity:0; visibility:hidden; transform:translateY(-4px)}
+    .pl-card{
+      width:min(92vw, 420px); background:var(--panel); border:1px solid var(--line);
+      border-radius:20px; padding:22px; box-shadow:var(--shadow); text-align:center;
+    }
+    .pl-logo{
+      width:56px; height:56px; border-radius:14px; margin:0 auto 12px;
+      background:conic-gradient(from 0deg, var(--acc), var(--acc-2), var(--acc));
+      box-shadow:0 8px 24px color-mix(in oklab, var(--acc) 35%, black);
+      display:grid; place-items:center; color:#fff; font-weight:900;
+      user-select:none;
+    }
+    .pl-title{font-weight:800; margin:4px 0 2px}
+    .pl-sub{color:var(--muted); margin:0 0 12px}
+    .pl-spinner{
+      width:42px; height:42px; border-radius:50%; margin:14px auto 10px;
+      border:3px solid color-mix(in oklab, var(--muted) 30%, transparent);
+      border-top-color:var(--acc);
+      animation:spin 1s linear infinite;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .pl-bar{
+      height:10px; border-radius:999px; background:color-mix(in oklab, var(--muted) 22%, transparent);
+      border:1px solid var(--line); overflow:hidden;
+    }
+    .pl-bar > span{
+      display:block; height:100%; width:0%;
+      background:linear-gradient(90deg, var(--acc), var(--acc-2));
+      transition:width .2s ease;
+    }
+    .pl-actions{display:flex; justify-content:center; gap:10px; margin-top:12px}
+    .pl-skip{
+      border:1px solid var(--line); background:var(--panel); color:var(--muted);
+      padding:8px 12px; border-radius:10px; cursor:pointer; font-weight:700;
+    }
+    .pl-skip:hover{color:var(--ink)}
+    @media (prefers-reduced-motion:reduce){
+      .pl-spinner{animation:none}
+      .preloader{transition:none}
+    }
+
+    /* ===================== NAV ===================== */
     .nav{position:sticky; top:0; z-index:50; backdrop-filter:blur(10px); border-bottom:1px solid var(--line)}
     .nav .container{display:flex; align-items:center; justify-content:space-between; padding:14px 18px; background:color-mix(in oklab, var(--panel) 70%, transparent)}
     .brand{display:flex; gap:12px; align-items:center; text-decoration:none; font-weight:800}
@@ -54,7 +101,6 @@
     .links a{text-decoration:none; color:var(--muted); font-weight:600}
     .links a:hover{color:var(--ink)}
     .hamb{display:none; border:1px solid var(--line); background:var(--panel); border-radius:10px; padding:8px 10px; cursor:pointer}
-
     @media (max-width:860px){
       .links{display:none}
       .links.open{
@@ -64,7 +110,7 @@
       .hamb{display:block}
     }
 
-    /* HERO */
+    /* ===================== HERO ===================== */
     .hero{padding:56px 0 22px}
     .hero-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:24px; align-items:center}
     @media (max-width:920px){ .hero-grid{grid-template-columns:1fr} }
@@ -88,7 +134,7 @@
     .blob.c{background:rgba(16,185,129,.7); left:40%; bottom:0; animation-delay:-6s}
     @keyframes move{to{transform:translate(40px,-30px) scale(1.05); opacity:.9}}
 
-    /* SECCIONES */
+    /* ===================== SECCIONES ===================== */
     section{padding:28px 0}
     h2{font-size:clamp(24px,4vw,34px); margin:6px 0 14px}
     .grid{display:grid; gap:18px; grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
@@ -122,7 +168,21 @@
 </head>
 <body>
 
-  <!-- NAV -->
+  <!-- ===================== PRELOADER ===================== -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="pl-card" role="status" aria-live="polite">
+      <div class="pl-logo">D</div>
+      <div class="pl-title">Cargando sitio…</div>
+      <div class="pl-sub">Preparando recursos</div>
+      <div class="pl-spinner" aria-hidden="true"></div>
+      <div class="pl-bar" aria-hidden="true"><span id="pl-progress"></span></div>
+      <div class="pl-actions">
+        <button class="pl-skip" id="pl-skip" type="button">Saltar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== NAV ===================== -->
   <header class="nav">
     <div class="container">
       <a class="brand" href="#"><span class="brand-badge" aria-hidden="true">D</span> <span>David&nbsp;Software</span></a>
@@ -136,7 +196,7 @@
     </div>
   </header>
 
-  <!-- HERO -->
+  <!-- ===================== HERO ===================== -->
   <section class="hero">
     <div class="container hero-grid">
       <div>
@@ -159,7 +219,7 @@
     </div>
   </section>
 
-  <!-- HABILIDADES -->
+  <!-- ===================== HABILIDADES ===================== -->
   <section id="habilidades">
     <div class="container">
       <h2>Habilidades clave</h2>
@@ -188,7 +248,7 @@
     </div>
   </section>
 
-  <!-- PROYECTOS -->
+  <!-- ===================== PROYECTOS ===================== -->
   <section id="proyectos">
     <div class="container">
       <h2>Proyectos</h2>
@@ -221,7 +281,7 @@
     </div>
   </section>
 
-  <!-- TIMELINE -->
+  <!-- ===================== TIMELINE ===================== -->
   <section id="timeline">
     <div class="container">
       <h2>Timeline</h2>
@@ -242,7 +302,7 @@
     </div>
   </section>
 
-  <!-- CONTACTO -->
+  <!-- ===================== CONTACTO ===================== -->
   <section id="contacto">
     <div class="container">
       <h2>Contacto</h2>
@@ -274,15 +334,56 @@
   </footer>
 
   <script>
-    // Año dinámico
+    // ===================== PRELOADER LÓGICA =====================
+    (function(){
+      const pre = document.getElementById('preloader');
+      const bar = document.getElementById('pl-progress');
+      const skip = document.getElementById('pl-skip');
+
+      // Simulación de progreso (rápida + suave)
+      let p = 0;
+      const tick = () => {
+        // aproximación a 100% con decremento de paso
+        const step = Math.max(1, Math.ceil((100 - p) / 7));
+        p = Math.min(100, p + step);
+        bar.style.width = p + '%';
+        if (p < 95) raf = requestAnimationFrame(tick);
+      };
+      let raf = requestAnimationFrame(tick);
+
+      const finish = () => {
+        // completar barra y ocultar
+        p = 100; bar.style.width = '100%';
+        pre.classList.add('hide');
+        // liberar animaciones
+        cancelAnimationFrame(raf);
+      };
+
+      // Cuando todo cargue, cerramos
+      window.addEventListener('load', () => {
+        // breve retardo para ver la transición
+        setTimeout(finish, 200);
+      });
+
+      // Botón para saltar
+      skip.addEventListener('click', finish);
+
+      // Seguridad: si algo impide 'load', cerramos en 4.5s
+      setTimeout(() => { if (!pre.classList.contains('hide')) finish(); }, 4500);
+
+      // Accesibilidad: reduce motion => sin preloader
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        pre.remove();
+      }
+    })();
+
+    // ===================== NAV / UX =====================
     document.getElementById('y').textContent = new Date().getFullYear();
 
-    // Menú hamburguesa
     const hamb = document.getElementById('hamb');
     const links = document.getElementById('links');
     hamb.addEventListener('click', () => links.classList.toggle('open'));
 
-    // Scroll suave para anclas internas
     document.querySelectorAll('a[href^="#"]').forEach(a=>{
       a.addEventListener('click',e=>{
         const id = a.getAttribute('href').slice(1);
@@ -294,11 +395,6 @@
         }
       });
     });
-
-    // Respeta reduced motion
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      document.querySelectorAll('.blob').forEach(b => b.style.animation = 'none');
-    }
   </script>
 </body>
 </html>
