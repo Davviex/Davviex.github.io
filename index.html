@@ -3,159 +3,248 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>David Software</title>
+  <title>David Software · Portafolio</title>
   <meta name="color-scheme" content="dark light" />
   <style>
     :root{
-      --bg1:#0f1226;
-      --bg2:#272a5b;
-      --ac:#ffd44d;
-      --txt:#e9ecf1;
+      --bg:#0b0f1a;
+      --bg2:#0f172a;
+      --card:rgba(255,255,255,.06);
+      --stroke:rgba(255,255,255,.12);
+      --txt:#e6e9f2;
+      --muted:#9aa3b2;
+      --acc:#58e6ff;        /* color acento */
+      --acc-2:#7c5cff;      /* acento secundario */
+      --radius:18px;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
     }
-    /* --- RESET BÁSICO --- */
+
+    /* Reset breve */
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
-      margin:0;
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Inter,Arial,sans-serif;
+      margin:0; font-family: Inter, ui-sans-serif, system-ui, Segoe UI, Roboto, Arial, sans-serif;
       color:var(--txt);
-      background:linear-gradient(135deg,var(--bg1),var(--bg2));
-      overflow-x:hidden;
+      background:
+        radial-gradient(1200px 600px at 10% -10%, #1a2141 0%, transparent 60%),
+        radial-gradient(900px 500px at 100% 0%, #102a3f 0%, transparent 60%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
     }
 
-    /* --- SPLASH/INTRO SVG --- */
-    #splash{
-      position:fixed; inset:0; display:grid; place-items:center;
-      background:radial-gradient(80vmax 80vmax at 50% 40%, #1b1f48 0%, #0d0f25 60%, #070816 100%);
-      z-index:9999;
-      transition:opacity .6s ease, visibility .6s ease;
-    }
-    #splash.hide{opacity:0; visibility:hidden}
+    a{color:inherit}
+    img{max-width:100%; display:block}
 
-    .logo-wrap{
-      width:min(85vw,800px);
-      aspect-ratio:16/9;
+    /* NAV */
+    .nav{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background:rgba(8,12,24,.55);
+      border-bottom:1px solid var(--stroke);
+    }
+    .nav-inner{
+      max-width:1200px; margin:0 auto; padding:14px 18px;
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    .brand{
+      display:flex; gap:10px; align-items:center; text-decoration:none;
+      font-weight:700; letter-spacing:.02em;
+    }
+    .brand-badge{
+      width:34px; height:34px; border-radius:10px;
+      background:linear-gradient(135deg,var(--acc),var(--acc-2));
+      display:grid; place-items:center; color:#05131a; font-weight:900;
+      box-shadow:0 4px 16px rgba(88,230,255,.35);
+    }
+    .links a{
+      text-decoration:none; color:var(--muted); margin-left:18px; font-weight:600;
+    }
+    .links a:hover{color:var(--txt)}
+
+    /* HERO */
+    .hero{
+      max-width:1200px; margin:56px auto 28px; padding:0 18px;
+      display:grid; grid-template-columns:1.1fr .9fr; gap:24px;
+    }
+    @media (max-width:920px){ .hero{grid-template-columns:1fr} }
+    .hero h1{
+      font-size:clamp(34px,6vw,58px); margin:.1em 0 .3em;
+      line-height:1.05;
+    }
+    .hero p.lead{
+      color:var(--muted); font-size:clamp(16px,2.4vw,18px); line-height:1.7;
+      max-width:60ch;
+    }
+    .cta{
+      display:flex; gap:12px; margin-top:22px; flex-wrap:wrap;
+    }
+    .btn{
+      text-decoration:none; font-weight:700; padding:12px 16px; border-radius:12px;
+      border:2px solid var(--acc); color:var(--acc); transition:.25s; box-shadow:none;
+    }
+    .btn:hover{background:var(--acc); color:#041018}
+    .btn.alt{
+      border:2px solid var(--acc-2); color:#ddd; background:linear-gradient(135deg,rgba(124,92,255,.18),rgba(88,230,255,.15));
+    }
+
+    /* Hero card */
+    .preview{
+      border:1px solid var(--stroke); border-radius:var(--radius); padding:16px;
+      background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+      box-shadow:var(--shadow);
+    }
+    .preview .screen{
+      aspect-ratio:16/9; border-radius:12px; overflow:hidden;
+      background:
+        radial-gradient(180px 60px at 20% 90%, rgba(124,92,255,.35), transparent 60%),
+        radial-gradient(220px 80px at 90% 10%, rgba(88,230,255,.35), transparent 60%),
+        linear-gradient(135deg,#0b1226,#0f2033);
+      border:1px solid var(--stroke);
       position:relative;
     }
-    /* texto inferior durante la intro */
-    .tagline{
-      position:absolute; inset:auto 0 0 0; text-align:center; font-size:clamp(12px,2.2vw,16px);
-      letter-spacing:.25em; color:#c9cee6; opacity:.9;
+    /* animación sutil */
+    .orb{
+      position:absolute; width:180px; height:180px; border-radius:50%;
+      background:radial-gradient(circle at 30% 30%, rgba(88,230,255,.9), rgba(88,230,255,.15));
+      filter:blur(1px); opacity:.75; animation:float 10s ease-in-out infinite alternate;
+    }
+    .orb.b{left:60%; top:10%}
+    .orb.a{left:10%; top:50%; animation-delay:-2.5s}
+    @keyframes float{
+      to{ transform:translate(40px,-30px) scale(1.05); opacity:.9 }
     }
 
-    /* Trazo dibujado */
-    .stroke{
-      fill:none;
-      stroke:var(--ac);
-      stroke-width:2.5;
-      stroke-linecap:round;
-      stroke-linejoin:round;
-      stroke-dasharray:1400;      /* longitud “grande” para animar */
-      stroke-dashoffset:1400;
-      animation:draw 2.6s ease forwards .2s;
-      filter:drop-shadow(0 0 6px rgba(255,212,77,.45));
+    /* SECCIÓN PROYECTOS */
+    .section{
+      max-width:1200px; margin:28px auto; padding:0 18px;
     }
-    @keyframes draw{
-      to{stroke-dashoffset:0}
-    }
-
-    /* Relleno que aparece después del trazo */
-    .fill{
-      fill:#ffffff;
-      opacity:0;
-      animation:fillIn .6s ease forwards 2.6s;
-    }
-    @keyframes fillIn{
-      to{opacity:1}
-    }
-
-    /* Onda de cierre (vector) que barre hacia arriba */
-    .wave{
-      position:absolute; inset:auto 0 -1px 0; height:40%;
-      transform:translateY(100%);
-      animation:reveal 1s cubic-bezier(.2,.9,.35,1) forwards 3.1s;
-    }
-    @keyframes reveal{
-      to{transform:translateY(0)}
-    }
-
-    /* Botón para saltar la intro */
-    .skip{
-      position:absolute; right:16px; top:16px;
-      background:#111528; color:#cfd6ff; border:1px solid #2a3160;
-      padding:.55rem .8rem; border-radius:.6rem; cursor:pointer; font-size:.9rem;
-      opacity:.9
-    }
-    .skip:hover{opacity:1}
-
-    /* --- CONTENIDO REAL DE LA PÁGINA --- */
-    header{
-      padding:72px 20px 24px;
-      text-align:center;
-    }
-    h1{font-size:clamp(32px,5vw,56px); margin:.2em 0}
-    p.lead{
-      max-width:720px; margin:0 auto; opacity:.9; line-height:1.65;
-      font-size:clamp(16px,2.2vw,18px)
-    }
-    main{
-      max-width:1100px; margin:32px auto; padding:0 20px 80px;
-      display:grid; gap:20px;
+    .section h2{ font-size:clamp(24px,4vw,34px); margin:14px 2px }
+    .grid{
+      display:grid; gap:18px;
       grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
     }
     .card{
-      background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1);
-      border-radius:16px; padding:20px; backdrop-filter:blur(6px);
+      background:var(--card); border:1px solid var(--stroke);
+      border-radius:var(--radius); padding:16px; box-shadow:var(--shadow);
+      display:flex; flex-direction:column; gap:10px;
     }
-    .card h3{margin:.2em 0}
-    .btn{
-      display:inline-block; margin-top:10px; padding:10px 14px; border-radius:10px;
-      border:2px solid var(--ac); color:var(--ac); text-decoration:none; font-weight:600;
-      transition:.25s;
+    .pill{
+      display:inline-block; font-size:12px; letter-spacing:.08em;
+      padding:6px 10px; border-radius:999px; color:#061017;
+      background:linear-gradient(135deg,var(--acc),var(--acc-2)); font-weight:800;
+      width:max-content;
     }
-    .btn:hover{background:var(--ac); color:#111}
-    /* Accesibilidad: respeta “reduced motion” */
-    @media (prefers-reduced-motion:reduce){
-      .stroke,.fill,.wave{animation:none}
-      #splash{display:none}
+    .card p{ color:var(--muted); line-height:1.6 }
+    .card a.more{ text-decoration:none; color:var(--acc); font-weight:700 }
+    .card a.more:hover{ text-decoration:underline }
+
+    /* FOOTER */
+    footer{
+      margin-top:40px; border-top:1px solid var(--stroke);
+      padding:24px 18px 60px; color:var(--muted); text-align:center;
     }
   </style>
 </head>
 <body>
 
-  <!-- INTRO CON SVG (VECTOR) -->
-  <div id="splash" aria-hidden="true">
-    <button class="skip" id="skipBtn" title="Saltar intro">Saltar</button>
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="#">
+        <span class="brand-badge">D</span>
+        <span>David&nbsp;Software</span>
+      </a>
+      <div class="links" role="navigation" aria-label="Secciones">
+        <a href="#proyectos">Proyectos</a>
+        <a href="#contacto">Contacto</a>
+        <a href="https://github.com/Davviex" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </nav>
 
-    <div class="logo-wrap">
-      <!-- LOGO CON TEXTO TRAZADO Y RELLENO -->
-      <svg viewBox="0 0 1200 450" width="100%" height="100%" role="img" aria-label="David Software">
-        <!-- Trazo “dibujado” -->
-        <text x="50%" y="52%" text-anchor="middle"
-              class="stroke"
-              style="font:700 120px 'Segoe UI',Roboto,Arial,sans-serif; letter-spacing:.05em;">
-          DAVID
-        </text>
-        <text x="50%" y="72%" text-anchor="middle"
-              class="stroke"
-              style="font:600 44px 'Segoe UI',Roboto,Arial,sans-serif; letter-spacing:.35em;">
-          SOFTWARE
-        </text>
+  <!-- HERO -->
+  <header class="hero">
+    <div>
+      <h1>Código, ideas y prototipos listos para producción</h1>
+      <p class="lead">
+        Desarrollador que disfruta crear interfaces rápidas, APIs claras y
+        experiencias que se sienten <em>pulidas</em>. Aquí comparto demos,
+        experimentos y proyectos reales.
+      </p>
+      <div class="cta">
+        <a class="btn" href="mailto:tu-correo@ejemplo.com">Hablemos</a>
+        <a class="btn alt" href="#proyectos">Ver proyectos</a>
+      </div>
+    </div>
 
-        <!-- Relleno que aparece después -->
-        <text x="50%" y="52%" text-anchor="middle"
-              class="fill"
-              style="font:700 120px 'Segoe UI',Roboto,Arial,sans-serif; letter-spacing:.05em;">
-          DAVID
-        </text>
-        <text x="50%" y="72%" text-anchor="middle"
-              class="fill"
-              style="font:600 44px 'Segoe UI',Roboto,Arial,sans-serif; letter-spacing:.35em;">
-          SOFTWARE
-        </text>
-      </svg>
+    <div class="preview" aria-hidden="true">
+      <div class="screen">
+        <div class="orb a"></div>
+        <div class="orb b"></div>
+      </div>
+      <p style="color:var(--muted); margin:10px 4px 0">
+        Vista previa — estático, sin dependencias.
+      </p>
+    </div>
+  </header>
 
-      <div class="tagline">Portafolio • Desarrollo • Ideas</div>
+  <!-- PROYECTOS -->
+  <section id="proyectos" class="section">
+    <h2>Proyectos seleccionados</h2>
+    <div class="grid">
+      <article class="card">
+        <span class="pill">Web</span>
+        <h3>Landing minimal</h3>
+        <p>Plantilla ligera con HTML/CSS puro y animaciones sutiles. Ideal para MVPs o productos en validación.</p>
+        <a class="more" href="#" target="_blank" rel="noopener">Demo</a>
+      </article>
 
-      <!-- OLA VECTORIAL QUE REVELA EL CONTENIDO -->
-      <svg class="wave" viewBox="0 0 1440 320" preserveAspectRatio="none">
+      <article class="card">
+        <span class="pill">API</span>
+        <h3>Microservicio simple</h3>
+        <p>Ejemplo de estructura para endpoints REST listos para desplegarse en Vercel, Render o Fly.io.</p>
+        <a class="more" href="#" target="_blank" rel="noopener">Repositorio</a>
+      </article>
+
+      <article class="card">
+        <span class="pill">UI</span>
+        <h3>Componentes accesibles</h3>
+        <p>Conjunto de componentes accesibles (focus, contraste y navegación por teclado) para proyectos rápidos.</p>
+        <a class="more" href="#" target="_blank" rel="noopener">Docs</a>
+      </article>
+
+      <article class="card">
+        <span class="pill">Data</span>
+        <h3>Dashboard estático</h3>
+        <p>Dashboard sin framework, con tarjetas tipo glass y carga instantánea, pensado para GitHub Pages.</p>
+        <a class="more" href="#" target="_blank" rel="noopener">Preview</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto" class="section">
+    <h2>Contacto</h2>
+    <div class="grid">
+      <article class="card">
+        <h3>¿Colaboramos?</h3>
+        <p>Envíame un correo y cuéntame qué quieres construir. Respondo rápido.</p>
+        <a class="btn" href="mailto:tu-correo@ejemplo.com">Escríbeme</a>
+      </article>
+      <article class="card">
+        <h3>Redes y código</h3>
+        <p>Publico snippets, notas y avances de proyectos.</p>
+        <a class="btn alt" href="https://github.com/Davviex" target="_blank" rel="noopener">Mi GitHub</a>
+      </article>
+    </div>
+  </section>
+
+  <footer>
+    © <span id="y"></span> David Software · Hecho con HTML + CSS · Deploy en GitHub Pages
+  </footer>
+
+  <script>
+    // año dinámico
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
