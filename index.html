@@ -1,44 +1,161 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>David Software</title>
+  <meta name="color-scheme" content="dark light" />
   <style>
-    body {
-      font-family: "Segoe UI", sans-serif;
-      background: linear-gradient(120deg, #1f1c2c, #928dab);
-      color: white;
-      text-align: center;
-      padding: 60px;
+    :root{
+      --bg1:#0f1226;
+      --bg2:#272a5b;
+      --ac:#ffd44d;
+      --txt:#e9ecf1;
     }
-    h1 {
-      font-size: 3em;
-      margin-bottom: 10px;
+    /* --- RESET BÁSICO --- */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Inter,Arial,sans-serif;
+      color:var(--txt);
+      background:linear-gradient(135deg,var(--bg1),var(--bg2));
+      overflow-x:hidden;
     }
-    p {
-      font-size: 1.3em;
-      max-width: 600px;
-      margin: 0 auto 30px;
-      line-height: 1.6;
+
+    /* --- SPLASH/INTRO SVG --- */
+    #splash{
+      position:fixed; inset:0; display:grid; place-items:center;
+      background:radial-gradient(80vmax 80vmax at 50% 40%, #1b1f48 0%, #0d0f25 60%, #070816 100%);
+      z-index:9999;
+      transition:opacity .6s ease, visibility .6s ease;
     }
-    a {
-      color: #ffc300;
-      text-decoration: none;
-      border: 2px solid #ffc300;
-      padding: 10px 20px;
-      border-radius: 8px;
-      transition: 0.3s;
+    #splash.hide{opacity:0; visibility:hidden}
+
+    .logo-wrap{
+      width:min(85vw,800px);
+      aspect-ratio:16/9;
+      position:relative;
     }
-    a:hover {
-      background-color: #ffc300;
-      color: #1f1c2c;
+    /* texto inferior durante la intro */
+    .tagline{
+      position:absolute; inset:auto 0 0 0; text-align:center; font-size:clamp(12px,2.2vw,16px);
+      letter-spacing:.25em; color:#c9cee6; opacity:.9;
+    }
+
+    /* Trazo dibujado */
+    .stroke{
+      fill:none;
+      stroke:var(--ac);
+      stroke-width:2.5;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+      stroke-dasharray:1400;      /* longitud “grande” para animar */
+      stroke-dashoffset:1400;
+      animation:draw 2.6s ease forwards .2s;
+      filter:drop-shadow(0 0 6px rgba(255,212,77,.45));
+    }
+    @keyframes draw{
+      to{stroke-dashoffset:0}
+    }
+
+    /* Relleno que aparece después del trazo */
+    .fill{
+      fill:#ffffff;
+      opacity:0;
+      animation:fillIn .6s ease forwards 2.6s;
+    }
+    @keyframes fillIn{
+      to{opacity:1}
+    }
+
+    /* Onda de cierre (vector) que barre hacia arriba */
+    .wave{
+      position:absolute; inset:auto 0 -1px 0; height:40%;
+      transform:translateY(100%);
+      animation:reveal 1s cubic-bezier(.2,.9,.35,1) forwards 3.1s;
+    }
+    @keyframes reveal{
+      to{transform:translateY(0)}
+    }
+
+    /* Botón para saltar la intro */
+    .skip{
+      position:absolute; right:16px; top:16px;
+      background:#111528; color:#cfd6ff; border:1px solid #2a3160;
+      padding:.55rem .8rem; border-radius:.6rem; cursor:pointer; font-size:.9rem;
+      opacity:.9
+    }
+    .skip:hover{opacity:1}
+
+    /* --- CONTENIDO REAL DE LA PÁGINA --- */
+    header{
+      padding:72px 20px 24px;
+      text-align:center;
+    }
+    h1{font-size:clamp(32px,5vw,56px); margin:.2em 0}
+    p.lead{
+      max-width:720px; margin:0 auto; opacity:.9; line-height:1.65;
+      font-size:clamp(16px,2.2vw,18px)
+    }
+    main{
+      max-width:1100px; margin:32px auto; padding:0 20px 80px;
+      display:grid; gap:20px;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    }
+    .card{
+      background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1);
+      border-radius:16px; padding:20px; backdrop-filter:blur(6px);
+    }
+    .card h3{margin:.2em 0}
+    .btn{
+      display:inline-block; margin-top:10px; padding:10px 14px; border-radius:10px;
+      border:2px solid var(--ac); color:var(--ac); text-decoration:none; font-weight:600;
+      transition:.25s;
+    }
+    .btn:hover{background:var(--ac); color:#111}
+    /* Accesibilidad: respeta “reduced motion” */
+    @media (prefers-reduced-motion:reduce){
+      .stroke,.fill,.wave{animation:none}
+      #splash{display:none}
     }
   </style>
 </head>
 <body>
-  <h1>Bienvenido a David Software</h1>
-  <p>Este sitio fue creado con GitHub Pages. Aquí puedes mostrar tus proyectos o portafolio de desarrollo web.</p>
-  <a href="https://github.com/Davviex" target="_blank">Ver mi perfil en GitHub</a>
-</body>
-</html>
+
+  <!-- INTRO CON SVG (VECTOR) -->
+  <div id="splash" aria-hidden="true">
+    <button class="skip" id="skipBtn" title="Saltar intro">Saltar</button>
+
+    <div class="logo-wrap">
+      <!-- LOGO CON TEXTO TRAZADO Y RELLENO -->
+      <svg viewBox="0 0 1200 450" width="100%" height="100%" role="img" aria-label="David Software">
+        <!-- Trazo “dibujado” -->
+        <text x="50%" y="52%" text-anchor="middle"
+              class="stroke"
+              style="font:700 120px 'Segoe UI',Roboto,Arial,sans-serif; letter-spacing:.05em;">
+          DAVID
+        </text>
+        <text x="50%" y="72%" text-anchor="middle"
+              class="stroke"
+              style="font:600 44px 'Segoe UI',Roboto,Arial,sans-serif; letter-spacing:.35em;">
+          SOFTWARE
+        </text>
+
+        <!-- Relleno que aparece después -->
+        <text x="50%" y="52%" text-anchor="middle"
+              class="fill"
+              style="font:700 120px 'Segoe UI',Roboto,Arial,sans-serif; letter-spacing:.05em;">
+          DAVID
+        </text>
+        <text x="50%" y="72%" text-anchor="middle"
+              class="fill"
+              style="font:600 44px 'Segoe UI',Roboto,Arial,sans-serif; letter-spacing:.35em;">
+          SOFTWARE
+        </text>
+      </svg>
+
+      <div class="tagline">Portafolio • Desarrollo • Ideas</div>
+
+      <!-- OLA VECTORIAL QUE REVELA EL CONTENIDO -->
+      <svg class="wave" viewBox="0 0 1440 320" preserveAspectRatio="none">
