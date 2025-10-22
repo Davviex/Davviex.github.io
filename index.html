@@ -3,248 +3,302 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>David Software · Portafolio</title>
-  <meta name="color-scheme" content="dark light" />
+  <title>David Software — Build. Ship. Repeat.</title>
+  <meta name="description" content="Portafolio y proyectos de desarrollo web y software." />
+  <meta name="color-scheme" content="light dark" />
   <style>
     :root{
-      --bg:#0b0f1a;
-      --bg2:#0f172a;
-      --card:rgba(255,255,255,.06);
-      --stroke:rgba(255,255,255,.12);
-      --txt:#e6e9f2;
-      --muted:#9aa3b2;
-      --acc:#58e6ff;        /* color acento */
-      --acc-2:#7c5cff;      /* acento secundario */
-      --radius:18px;
-      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --bg:#f7f8fb;
+      --panel:#fff;
+      --ink:#0f172a;
+      --muted:#5b667a;
+      --line:#e7eaf0;
+      --acc:#0ea5e9;        /* cian */
+      --acc-2:#7c3aed;      /* violeta */
+      --radius:16px;
+      --shadow:0 10px 30px rgba(10,14,31,.08);
+    }
+    @media (prefers-color-scheme:dark){
+      :root{
+        --bg:#0b0f1a;
+        --panel:#0f1524;
+        --ink:#e6e9f2;
+        --muted:#a9b4c6;
+        --line:#1f2740;
+        --shadow:0 10px 30px rgba(0,0,0,.45);
+      }
     }
 
-    /* Reset breve */
+    /* Reset */
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0; font-family: Inter, ui-sans-serif, system-ui, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--txt);
-      background:
-        radial-gradient(1200px 600px at 10% -10%, #1a2141 0%, transparent 60%),
-        radial-gradient(900px 500px at 100% 0%, #102a3f 0%, transparent 60%),
-        linear-gradient(180deg, var(--bg), var(--bg2));
+      color:var(--ink); background:var(--bg);
+      background-image:
+        radial-gradient(900px 500px at -10% -10%, rgba(14,165,233,.15), transparent 60%),
+        radial-gradient(900px 500px at 110% -10%, rgba(124,58,237,.15), transparent 60%);
     }
-
     a{color:inherit}
-    img{max-width:100%; display:block}
+    .container{max-width:1200px; margin:0 auto; padding:0 18px}
+    .muted{color:var(--muted)}
+    .small{font-size:.95rem}
 
     /* NAV */
-    .nav{
-      position:sticky; top:0; z-index:50;
-      backdrop-filter: blur(10px);
-      background:rgba(8,12,24,.55);
-      border-bottom:1px solid var(--stroke);
+    .nav{position:sticky; top:0; z-index:50; backdrop-filter:blur(10px); border-bottom:1px solid var(--line)}
+    .nav .container{display:flex; align-items:center; justify-content:space-between; padding:14px 18px; background:color-mix(in oklab, var(--panel) 70%, transparent)}
+    .brand{display:flex; gap:12px; align-items:center; text-decoration:none; font-weight:800}
+    .brand-badge{width:36px; height:36px; border-radius:12px; display:grid; place-items:center; color:#fff; font-weight:900;
+      background:conic-gradient(from 0deg, var(--acc), var(--acc-2), var(--acc)); box-shadow:0 6px 18px color-mix(in oklab, var(--acc) 35%, black)}
+    .links{display:flex; gap:18px}
+    .links a{text-decoration:none; color:var(--muted); font-weight:600}
+    .links a:hover{color:var(--ink)}
+    .hamb{display:none; border:1px solid var(--line); background:var(--panel); border-radius:10px; padding:8px 10px; cursor:pointer}
+
+    @media (max-width:860px){
+      .links{display:none}
+      .links.open{
+        display:grid; gap:8px; position:absolute; right:18px; top:62px; background:var(--panel);
+        border:1px solid var(--line); border-radius:12px; padding:10px; box-shadow:var(--shadow)
+      }
+      .hamb{display:block}
     }
-    .nav-inner{
-      max-width:1200px; margin:0 auto; padding:14px 18px;
-      display:flex; align-items:center; justify-content:space-between;
-    }
-    .brand{
-      display:flex; gap:10px; align-items:center; text-decoration:none;
-      font-weight:700; letter-spacing:.02em;
-    }
-    .brand-badge{
-      width:34px; height:34px; border-radius:10px;
-      background:linear-gradient(135deg,var(--acc),var(--acc-2));
-      display:grid; place-items:center; color:#05131a; font-weight:900;
-      box-shadow:0 4px 16px rgba(88,230,255,.35);
-    }
-    .links a{
-      text-decoration:none; color:var(--muted); margin-left:18px; font-weight:600;
-    }
-    .links a:hover{color:var(--txt)}
 
     /* HERO */
-    .hero{
-      max-width:1200px; margin:56px auto 28px; padding:0 18px;
-      display:grid; grid-template-columns:1.1fr .9fr; gap:24px;
-    }
-    @media (max-width:920px){ .hero{grid-template-columns:1fr} }
-    .hero h1{
-      font-size:clamp(34px,6vw,58px); margin:.1em 0 .3em;
-      line-height:1.05;
-    }
-    .hero p.lead{
-      color:var(--muted); font-size:clamp(16px,2.4vw,18px); line-height:1.7;
-      max-width:60ch;
-    }
-    .cta{
-      display:flex; gap:12px; margin-top:22px; flex-wrap:wrap;
-    }
-    .btn{
-      text-decoration:none; font-weight:700; padding:12px 16px; border-radius:12px;
-      border:2px solid var(--acc); color:var(--acc); transition:.25s; box-shadow:none;
-    }
-    .btn:hover{background:var(--acc); color:#041018}
-    .btn.alt{
-      border:2px solid var(--acc-2); color:#ddd; background:linear-gradient(135deg,rgba(124,92,255,.18),rgba(88,230,255,.15));
-    }
+    .hero{padding:56px 0 22px}
+    .hero-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:24px; align-items:center}
+    @media (max-width:920px){ .hero-grid{grid-template-columns:1fr} }
+    h1{font-size:clamp(34px,6vw,58px); margin:.2em 0 .15em; line-height:1.05}
+    .lead{font-size:clamp(16px,2.4vw,18px); color:var(--muted); line-height:1.7; max-width:65ch}
+    .cta{display:flex; gap:12px; margin-top:22px; flex-wrap:wrap}
+    .btn{ text-decoration:none; font-weight:800; padding:12px 16px; border-radius:12px; border:2px solid var(--acc); color:var(--acc); transition:.25s; display:inline-flex; align-items:center; gap:8px }
+    .btn:hover{background:var(--acc); color:white}
+    .btn.alt{ border-color:var(--acc-2); color:var(--acc-2) }
+    .btn.alt:hover{ background:var(--acc-2); color:white }
 
-    /* Hero card */
-    .preview{
-      border:1px solid var(--stroke); border-radius:var(--radius); padding:16px;
-      background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
-      box-shadow:var(--shadow);
+    /* Blob preview */
+    .preview{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:16px; box-shadow:var(--shadow)}
+    .screen{position:relative; aspect-ratio:16/10; border-radius:12px; overflow:hidden; border:1px solid var(--line)}
+    .blob{
+      position:absolute; width:300px; height:300px; border-radius:50%;
+      filter:blur(20px); mix-blend-mode:multiply; opacity:.75; animation:move 12s ease-in-out infinite alternate;
     }
-    .preview .screen{
-      aspect-ratio:16/9; border-radius:12px; overflow:hidden;
-      background:
-        radial-gradient(180px 60px at 20% 90%, rgba(124,92,255,.35), transparent 60%),
-        radial-gradient(220px 80px at 90% 10%, rgba(88,230,255,.35), transparent 60%),
-        linear-gradient(135deg,#0b1226,#0f2033);
-      border:1px solid var(--stroke);
-      position:relative;
-    }
-    /* animación sutil */
-    .orb{
-      position:absolute; width:180px; height:180px; border-radius:50%;
-      background:radial-gradient(circle at 30% 30%, rgba(88,230,255,.9), rgba(88,230,255,.15));
-      filter:blur(1px); opacity:.75; animation:float 10s ease-in-out infinite alternate;
-    }
-    .orb.b{left:60%; top:10%}
-    .orb.a{left:10%; top:50%; animation-delay:-2.5s}
-    @keyframes float{
-      to{ transform:translate(40px,-30px) scale(1.05); opacity:.9 }
-    }
+    .blob.a{background:rgba(14,165,233,.7); left:10%; top:20%}
+    .blob.b{background:rgba(124,58,237,.7); right:8%; top:35%; animation-delay:-3s}
+    .blob.c{background:rgba(16,185,129,.7); left:40%; bottom:0; animation-delay:-6s}
+    @keyframes move{to{transform:translate(40px,-30px) scale(1.05); opacity:.9}}
 
-    /* SECCIÓN PROYECTOS */
-    .section{
-      max-width:1200px; margin:28px auto; padding:0 18px;
-    }
-    .section h2{ font-size:clamp(24px,4vw,34px); margin:14px 2px }
-    .grid{
-      display:grid; gap:18px;
-      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-    }
-    .card{
-      background:var(--card); border:1px solid var(--stroke);
-      border-radius:var(--radius); padding:16px; box-shadow:var(--shadow);
-      display:flex; flex-direction:column; gap:10px;
-    }
-    .pill{
-      display:inline-block; font-size:12px; letter-spacing:.08em;
-      padding:6px 10px; border-radius:999px; color:#061017;
-      background:linear-gradient(135deg,var(--acc),var(--acc-2)); font-weight:800;
-      width:max-content;
-    }
-    .card p{ color:var(--muted); line-height:1.6 }
-    .card a.more{ text-decoration:none; color:var(--acc); font-weight:700 }
-    .card a.more:hover{ text-decoration:underline }
+    /* SECCIONES */
+    section{padding:28px 0}
+    h2{font-size:clamp(24px,4vw,34px); margin:6px 0 14px}
+    .grid{display:grid; gap:18px; grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
 
-    /* FOOTER */
-    footer{
-      margin-top:40px; border-top:1px solid var(--stroke);
-      padding:24px 18px 60px; color:var(--muted); text-align:center;
-    }
+    /* HABILIDADES */
+    .skill{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:16px; box-shadow:var(--shadow)}
+    .bar{height:10px; border-radius:999px; background:color-mix(in oklab, var(--muted) 25%, transparent); overflow:hidden; border:1px solid var(--line)}
+    .bar > span{display:block; height:100%; background:linear-gradient(90deg, var(--acc), var(--acc-2)); border-radius:inherit}
+
+    /* PROYECTOS */
+    .card{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:16px; box-shadow:var(--shadow); display:flex; flex-direction:column; gap:10px}
+    .pill{display:inline-block; font-size:.75rem; letter-spacing:.08em; padding:6px 10px; border-radius:999px; color:#061017; background:linear-gradient(135deg,var(--acc),var(--acc-2)); font-weight:900; width:max-content}
+    .card p{color:var(--muted); line-height:1.6}
+    .card a.more{color:var(--acc); font-weight:800; text-decoration:none}
+    .card a.more:hover{text-decoration:underline}
+
+    /* TIMELINE */
+    .timeline{position:relative; margin:6px 0}
+    .timeline::before{content:""; position:absolute; left:12px; top:0; bottom:0; width:2px; background:var(--line)}
+    .event{position:relative; margin-left:34px; padding:10px 12px 12px; border:1px solid var(--line); background:var(--panel); border-radius:12px; box-shadow:var(--shadow)}
+    .event::before{content:""; position:absolute; left:-30px; top:14px; width:18px; height:18px; border-radius:50%; background:linear-gradient(135deg,var(--acc),var(--acc-2)); border:3px solid var(--panel)}
+
+    /* CONTACTO */
+    .contact{display:grid; grid-template-columns:1fr 1fr; gap:18px}
+    @media (max-width:860px){ .contact{grid-template-columns:1fr} }
+    .input{width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--line); background:var(--panel); color:var(--ink)}
+    textarea.input{min-height:120px; resize:vertical}
+
+    footer{border-top:1px solid var(--line); padding:28px 0 60px; text-align:center; color:var(--muted)}
   </style>
 </head>
 <body>
 
   <!-- NAV -->
-  <nav class="nav">
-    <div class="nav-inner">
-      <a class="brand" href="#">
-        <span class="brand-badge">D</span>
-        <span>David&nbsp;Software</span>
-      </a>
-      <div class="links" role="navigation" aria-label="Secciones">
+  <header class="nav">
+    <div class="container">
+      <a class="brand" href="#"><span class="brand-badge" aria-hidden="true">D</span> <span>David&nbsp;Software</span></a>
+      <nav class="links" id="links">
+        <a href="#habilidades">Habilidades</a>
         <a href="#proyectos">Proyectos</a>
+        <a href="#timeline">Timeline</a>
         <a href="#contacto">Contacto</a>
-        <a href="https://github.com/Davviex" target="_blank" rel="noopener">GitHub</a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- HERO -->
-  <header class="hero">
-    <div>
-      <h1>Código, ideas y prototipos listos para producción</h1>
-      <p class="lead">
-        Desarrollador que disfruta crear interfaces rápidas, APIs claras y
-        experiencias que se sienten <em>pulidas</em>. Aquí comparto demos,
-        experimentos y proyectos reales.
-      </p>
-      <div class="cta">
-        <a class="btn" href="mailto:tu-correo@ejemplo.com">Hablemos</a>
-        <a class="btn alt" href="#proyectos">Ver proyectos</a>
-      </div>
-    </div>
-
-    <div class="preview" aria-hidden="true">
-      <div class="screen">
-        <div class="orb a"></div>
-        <div class="orb b"></div>
-      </div>
-      <p style="color:var(--muted); margin:10px 4px 0">
-        Vista previa — estático, sin dependencias.
-      </p>
+      </nav>
+      <button class="hamb" id="hamb" aria-label="Abrir menú">☰</button>
     </div>
   </header>
 
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <h1>Build. Ship. Repeat.</h1>
+        <p class="lead">Creo productos web rápidos y claros. Me enfoco en DX, accesibilidad y despliegues sin fricción. Aquí encontrarás una selección de proyectos y mi forma de trabajar.</p>
+        <div class="cta">
+          <a class="btn" href="mailto:tu-correo@ejemplo.com">Hablemos</a>
+          <a class="btn alt" href="https://github.com/Davviex" target="_blank" rel="noopener">Mi GitHub</a>
+        </div>
+      </div>
+
+      <div class="preview" aria-hidden="true">
+        <div class="screen">
+          <div class="blob a"></div>
+          <div class="blob b"></div>
+          <div class="blob c"></div>
+        </div>
+        <p class="muted small" style="margin:10px 4px 0">Demo visual — blobs animados sin librerías.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HABILIDADES -->
+  <section id="habilidades">
+    <div class="container">
+      <h2>Habilidades clave</h2>
+      <div class="grid">
+        <div class="skill">
+          <strong>Frontend</strong>
+          <p class="muted small">HTML5, CSS moderno, JS, accesibilidad, performance</p>
+          <div class="bar"><span style="width:85%"></span></div>
+        </div>
+        <div class="skill">
+          <strong>Backend</strong>
+          <p class="muted small">APIs REST, autenticación, buenas prácticas</p>
+          <div class="bar"><span style="width:70%"></span></div>
+        </div>
+        <div class="skill">
+          <strong>DevOps</strong>
+          <p class="muted small">CI/CD, Pages/Vercel/Netlify, logs y monitoreo</p>
+          <div class="bar"><span style="width:65%"></span></div>
+        </div>
+        <div class="skill">
+          <strong>UX / UI</strong>
+          <p class="muted small">Diseños claros, foco en uso real y detalle</p>
+          <div class="bar"><span style="width:75%"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- PROYECTOS -->
-  <section id="proyectos" class="section">
-    <h2>Proyectos seleccionados</h2>
-    <div class="grid">
-      <article class="card">
-        <span class="pill">Web</span>
-        <h3>Landing minimal</h3>
-        <p>Plantilla ligera con HTML/CSS puro y animaciones sutiles. Ideal para MVPs o productos en validación.</p>
-        <a class="more" href="#" target="_blank" rel="noopener">Demo</a>
-      </article>
+  <section id="proyectos">
+    <div class="container">
+      <h2>Proyectos</h2>
+      <div class="grid">
+        <article class="card">
+          <span class="pill">Web</span>
+          <h3>Starter estático</h3>
+          <p>Plantilla súper ligera para landings y documentación, ideal para GitHub Pages.</p>
+          <a class="more" href="#" target="_blank" rel="noopener">Ver demo</a>
+        </article>
+        <article class="card">
+          <span class="pill">API</span>
+          <h3>Tiny REST</h3>
+          <p>Estructura mínima de API con buenas prácticas y despliegue 1-click.</p>
+          <a class="more" href="#" target="_blank" rel="noopener">Repositorio</a>
+        </article>
+        <article class="card">
+          <span class="pill">UI</span>
+          <h3>Kit de componentes</h3>
+          <p>Snippets accesibles listos para copiar/pegar en tus proyectos.</p>
+          <a class="more" href="#" target="_blank" rel="noopener">Documentación</a>
+        </article>
+        <article class="card">
+          <span class="pill">Data</span>
+          <h3>Dashboard sin framework</h3>
+          <p>Tarjetas con glassmorphism, carga instantánea y cero dependencias.</p>
+          <a class="more" href="#" target="_blank" rel="noopener">Preview</a>
+        </article>
+      </div>
+    </div>
+  </section>
 
-      <article class="card">
-        <span class="pill">API</span>
-        <h3>Microservicio simple</h3>
-        <p>Ejemplo de estructura para endpoints REST listos para desplegarse en Vercel, Render o Fly.io.</p>
-        <a class="more" href="#" target="_blank" rel="noopener">Repositorio</a>
-      </article>
-
-      <article class="card">
-        <span class="pill">UI</span>
-        <h3>Componentes accesibles</h3>
-        <p>Conjunto de componentes accesibles (focus, contraste y navegación por teclado) para proyectos rápidos.</p>
-        <a class="more" href="#" target="_blank" rel="noopener">Docs</a>
-      </article>
-
-      <article class="card">
-        <span class="pill">Data</span>
-        <h3>Dashboard estático</h3>
-        <p>Dashboard sin framework, con tarjetas tipo glass y carga instantánea, pensado para GitHub Pages.</p>
-        <a class="more" href="#" target="_blank" rel="noopener">Preview</a>
-      </article>
+  <!-- TIMELINE -->
+  <section id="timeline">
+    <div class="container">
+      <h2>Timeline</h2>
+      <div class="timeline">
+        <div class="event">
+          <strong>2025 · Plataforma de lanzamientos</strong>
+          <p class="muted small">Automatización de releases y changelogs con hooks y CI.</p>
+        </div>
+        <div class="event">
+          <strong>2024 · Librería de UI</strong>
+          <p class="muted small">Conjunto de componentes accesibles para apps internas.</p>
+        </div>
+        <div class="event">
+          <strong>2023 · Migración a CDNs</strong>
+          <p class="muted small">Mejoras de latencia y costos con edge caching.</p>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- CONTACTO -->
-  <section id="contacto" class="section">
-    <h2>Contacto</h2>
-    <div class="grid">
-      <article class="card">
-        <h3>¿Colaboramos?</h3>
-        <p>Envíame un correo y cuéntame qué quieres construir. Respondo rápido.</p>
-        <a class="btn" href="mailto:tu-correo@ejemplo.com">Escríbeme</a>
-      </article>
-      <article class="card">
-        <h3>Redes y código</h3>
-        <p>Publico snippets, notas y avances de proyectos.</p>
-        <a class="btn alt" href="https://github.com/Davviex" target="_blank" rel="noopener">Mi GitHub</a>
-      </article>
+  <section id="contacto">
+    <div class="container">
+      <h2>Contacto</h2>
+      <div class="contact">
+        <form class="card" onsubmit="return false" aria-label="Formulario de contacto (demo)">
+          <label class="small muted" for="n">Nombre</label>
+          <input class="input" id="n" placeholder="Tu nombre" />
+          <label class="small muted" for="e">Correo</label>
+          <input class="input" id="e" type="email" placeholder="tu@correo.com" />
+          <label class="small muted" for="m">Mensaje</label>
+          <textarea class="input" id="m" placeholder="Cuéntame sobre tu idea"></textarea>
+          <button class="btn" style="margin-top:10px">Enviar (demo)</button>
+          <p class="muted small">* Este formulario es de demostración (no envía datos).</p>
+        </form>
+
+        <div class="card">
+          <h3>¿Prefieres escribir directo?</h3>
+          <p class="muted">Envíame un correo con el contexto del proyecto y timeline esperado.</p>
+          <a class="btn alt" href="mailto:tu-correo@ejemplo.com">Enviar correo</a>
+        </div>
+      </div>
     </div>
   </section>
 
   <footer>
-    © <span id="y"></span> David Software · Hecho con HTML + CSS · Deploy en GitHub Pages
+    <div class="container">
+      © <span id="y"></span> David Software — Hecho con HTML+CSS+JS · Deploy en GitHub Pages
+    </div>
   </footer>
 
   <script>
-    // año dinámico
+    // Año dinámico
     document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Menú hamburguesa
+    const hamb = document.getElementById('hamb');
+    const links = document.getElementById('links');
+    hamb.addEventListener('click', () => links.classList.toggle('open'));
+
+    // Scroll suave para anclas internas
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if(el){
+          e.preventDefault();
+          window.scrollTo({top: el.getBoundingClientRect().top + window.scrollY - 70, behavior:'smooth'});
+          links.classList.remove('open');
+        }
+      });
+    });
+
+    // Respeta reduced motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('.blob').forEach(b => b.style.animation = 'none');
+    }
   </script>
 </body>
 </html>
